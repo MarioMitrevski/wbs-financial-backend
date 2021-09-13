@@ -1,6 +1,7 @@
 package com.example.wbsfinancialbackend.api.cryptocurrency.dbpedia
 
 import com.example.wbsfinancialbackend.api.cryptocurrency.CryptocurrencyService
+import com.example.wbsfinancialbackend.constants.SparqlEndpoints
 import org.apache.jena.query.Query
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
@@ -18,15 +19,11 @@ class CryptocurrencyServiceDbpedia : CryptocurrencyService {
 
         val query: Query = QueryFactory.create(queryString)
         try {
-            val qexec = QueryExecutionFactory.sparqlService(SPARQL_ENDPOINT, query)
+            val qexec = QueryExecutionFactory.sparqlService(SparqlEndpoints.DBPEDIA_SPARQL_SERVICE, query)
             val results = qexec.execSelect()
             return CompletableFuture.completedFuture(results.nextSolution().get("abstract").toString())
         } catch (exception: Exception) {
             throw Exception()
         }
-    }
-
-    companion object {
-        private const val SPARQL_ENDPOINT = "http://dbpedia.org/sparql"
     }
 }
