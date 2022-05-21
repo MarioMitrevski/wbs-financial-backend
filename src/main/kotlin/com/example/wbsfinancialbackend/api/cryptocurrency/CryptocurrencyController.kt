@@ -1,6 +1,6 @@
 package com.example.wbsfinancialbackend.api.cryptocurrency
 
-import com.example.wbsfinancialbackend.constants.WBSFinancialEndpoints
+import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletableFuture
 

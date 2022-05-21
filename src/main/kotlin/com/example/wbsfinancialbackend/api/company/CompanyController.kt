@@ -1,6 +1,6 @@
 package com.example.wbsfinancialbackend.api.company
 
-import com.example.wbsfinancialbackend.constants.WBSFinancialEndpoints
+import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import org.springframework.web.bind.annotation.*
 
 @RestController

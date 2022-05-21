@@ -2,6 +2,9 @@ package com.example.wbsfinancialbackend.api.company.dbpedia
 
 import com.example.wbsfinancialbackend.api.company.CompanyService
 import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI_LINKS_CACHE
+import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaOntologyUrl
+import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaResourceUrl
+import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.WikipediaResourceUrl
 import com.example.wbsfinancialbackend.data.company.dbpedia.Predicate
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.impl.PropertyImpl
@@ -15,10 +18,6 @@ import java.util.concurrent.CompletableFuture
 class CompanyServiceDbpedia : CompanyService {
 
     companion object {
-        private const val DbpediaResourceUrl = "http://dbpedia.org/page/"
-        private const val WikipediaResourceUrl = "https://en.wikipedia.org/wiki/"
-        private const val DbpediaOntologyUrl = "http://dbpedia.org/ontology/"
-
         private val supportedPredicates = mapOf(
             Pair("product", Predicate(DbpediaOntologyUrl.plus("product"), true)),
             Pair("service", Predicate(DbpediaOntologyUrl.plus("service"), true)),

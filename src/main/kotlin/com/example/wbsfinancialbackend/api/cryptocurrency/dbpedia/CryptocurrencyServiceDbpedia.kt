@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.api.cryptocurrency.dbpedia
 
 import com.example.wbsfinancialbackend.api.cryptocurrency.CryptocurrencyService
-import com.example.wbsfinancialbackend.constants.SparqlEndpoints
+import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints
 import org.apache.jena.query.Query
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory

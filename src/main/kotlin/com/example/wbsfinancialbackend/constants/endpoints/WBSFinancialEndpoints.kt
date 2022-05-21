@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.constants
+package com.example.wbsfinancialbackend.constants.endpoints
 
 class WBSFinancialEndpoints {
     companion object {
