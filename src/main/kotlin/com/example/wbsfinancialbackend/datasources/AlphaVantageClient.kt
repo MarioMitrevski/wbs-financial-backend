@@ -6,7 +6,6 @@ import com.example.wbsfinancialbackend.datasources.company.CompanyEarningsRespon
 import com.example.wbsfinancialbackend.datasources.company.CompanyOverviewResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate
-import lombok.Value
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,8 +22,8 @@ interface AlphaVantageClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/query"], produces = ["application/json"])
     fun getCompanyOverview(
-        @RequestParam function: String,
-        @RequestParam symbol: String
+        @RequestParam symbol: String,
+        @RequestParam function: String = "OVERVIEW"
     ): CompanyOverviewResponseDTO
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/query"], produces = ["application/json"])
@@ -48,7 +47,9 @@ class AlphaVantageClientConfiguration {
     @Bean
     fun requestInterceptor(): RequestInterceptor? {
         return RequestInterceptor { requestTemplate: RequestTemplate ->
-            requestTemplate.query("apikey", alphaVantageKey)
+            if (requestTemplate.feignTarget().type() == AlphaVantageClient::class.java) {
+                requestTemplate.query("apikey", alphaVantageKey)
+            }
         }
     }
 }

@@ -1,13 +1,10 @@
 package com.example.wbsfinancialbackend.api.company
 
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
-import com.example.wbsfinancialbackend.datasources.company.CompanyAnnualReportDTO
-import com.example.wbsfinancialbackend.datasources.company.CompanyAnnualReportsDTO
-import com.example.wbsfinancialbackend.datasources.company.CompanyEarningsResponseDTO
-import com.example.wbsfinancialbackend.datasources.company.CompanyOverviewResponseDTO
-import com.example.wbsfinancialbackend.domain.company.usecases.GetCompanyAnnualReports
-import com.example.wbsfinancialbackend.domain.company.usecases.GetCompanyDetails
-import com.example.wbsfinancialbackend.domain.company.usecases.GetCompanyEarningsPerShare
+import com.example.wbsfinancialbackend.datasources.company.*
+import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
+import com.example.wbsfinancialbackend.domain.company.usecases.*
+import com.example.wbsfinancialbackend.domain.news.usecases.GetCompanyNews
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,9 +12,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(path = [WBSFinancialEndpoints.COMPANY_ENDPOINT])
 class CompanyController(
     val companyService: CompanyService,
-    val getCompanyDetails: GetCompanyDetails,
+    val getCompanyOverview: GetCompanyOverview,
     val getCompanyEarningsPerShare: GetCompanyEarningsPerShare,
-    val getCompanyAnnualReports: GetCompanyAnnualReports
+    val getCompanyAnnualReports: GetCompanyAnnualReports,
+    val getCompanyDetails: GetCompanyDetails,
+    val getCompanyRecommendationTrends: GetCompanyRecommendationTrends,
+    val getCompanyNews: GetCompanyNews,
+    val searchCompany: SearchCompany
 ) {
 
     @GetMapping(path = ["/{name}/wikiLinks"])
@@ -28,9 +29,9 @@ class CompanyController(
         return companyService.getCompanyWikiLinks(name, predicate)
     }
 
-    @GetMapping(path = ["/{symbol}/details"])
-    fun getCompanyDetails(@PathVariable("symbol") symbol: String): ResponseEntity<CompanyOverviewResponseDTO> {
-        return ResponseEntity.ok(getCompanyDetails.invoke(symbol))
+    @GetMapping(path = ["/{symbol}/overview"])
+    fun getCompanyOverview(@PathVariable("symbol") symbol: String): ResponseEntity<CompanyOverviewResponseDTO> {
+        return ResponseEntity.ok(getCompanyOverview.invoke(symbol))
     }
 
     @GetMapping(path = ["/{symbol}/earnings"])
@@ -45,5 +46,33 @@ class CompanyController(
         @PathVariable("symbol") symbol: String,
     ): ResponseEntity<CompanyAnnualReportsDTO> {
         return ResponseEntity.ok(getCompanyAnnualReports.invoke(symbol))
+    }
+
+    @GetMapping(path = ["/{symbol}/details"])
+    fun getCompanyDetails(
+        @PathVariable("symbol") symbol: String,
+    ): ResponseEntity<CompanyDetailsResponseDTO> {
+        return ResponseEntity.ok(getCompanyDetails.invoke(symbol))
+    }
+
+    @GetMapping(path = ["/{symbol}/recommendation"])
+    fun getCompanyRecommendationTrends(
+        @PathVariable("symbol") symbol: String,
+    ): ResponseEntity<List<CompanyRecommendationTrendsResponseDTO>> {
+        return ResponseEntity.ok(getCompanyRecommendationTrends.invoke(symbol))
+    }
+
+    @GetMapping(path = ["/{symbol}/news"])
+    fun getCompanyNews(
+        @PathVariable("symbol") symbol: String,
+    ): ResponseEntity<List<NewsResponseDTO>> {
+        return ResponseEntity.ok(getCompanyNews.invoke(symbol))
+    }
+
+    @GetMapping(path = ["/search"])
+    fun searchCompanies(
+        @RequestParam("q") query: String,
+    ): ResponseEntity<SearchCompanyResponseDTO> {
+        return ResponseEntity.ok(searchCompany.invoke(query))
     }
 }
