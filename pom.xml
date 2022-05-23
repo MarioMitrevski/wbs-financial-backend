@@ -103,7 +103,12 @@
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>
+                        <plugin>no-arg</plugin>
                     </compilerPlugins>
+
+                    <pluginOptions>
+                        <option>no-arg:annotation=com.my.Annotation</option>
+                    </pluginOptions>
                 </configuration>
                 <dependencies>
                     <dependency>
