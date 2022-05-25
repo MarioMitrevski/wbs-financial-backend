@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 class CryptocurrencyServiceDbpedia : CryptocurrencyService {
 
     @Async
-    override fun getCryptocurrencyDetails(name: String): CompletableFuture<String> {
+    override fun getCryptocurrencyDescription(name: String): CompletableFuture<String> {
         val queryString =
             """prefix dbo: <http://dbpedia.org/ontology/> prefix dbr: <http://dbpedia.org/resource/> SELECT ?abstract WHERE { dbr:${name} dbo:abstract ?abstract FILTER (lang(?abstract) = "en") }"""
 

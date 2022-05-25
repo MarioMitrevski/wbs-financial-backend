@@ -4,5 +4,5 @@ import java.util.concurrent.CompletableFuture
 
 interface CryptocurrencyService {
 
-    fun getCryptocurrencyDetails(name: String): CompletableFuture<String>
+    fun getCryptocurrencyDescription(name: String): CompletableFuture<String>
 }
