@@ -4,7 +4,6 @@ import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
 import com.example.wbsfinancialbackend.datasources.company.CompanyDetailsResponseDTO
 import com.example.wbsfinancialbackend.datasources.company.CompanyRecommendationTrendsResponseDTO
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
-import com.example.wbsfinancialbackend.domain.company.usecases.SearchCompanyResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
@@ -41,11 +40,6 @@ interface FinHubClient {
     fun getNews(
         @RequestParam category: String,
     ): List<NewsResponseDTO>
-
-    @RequestMapping(method = [RequestMethod.GET], value = ["/search"], produces = ["application/json"])
-    fun searchCompany(
-        @RequestParam q: String,
-    ): SearchCompanyResponseDTO
 }
 
 @Configuration
