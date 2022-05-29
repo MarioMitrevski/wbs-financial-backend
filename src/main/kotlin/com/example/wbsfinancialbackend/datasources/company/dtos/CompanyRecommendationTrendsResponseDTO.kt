@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.datasources.company
+package com.example.wbsfinancialbackend.datasources.company.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*

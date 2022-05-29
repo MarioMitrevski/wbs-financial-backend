@@ -2,7 +2,7 @@ package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.datasources.AlphaVantageClient
 import com.example.wbsfinancialbackend.datasources.UseCase
-import com.example.wbsfinancialbackend.datasources.company.CompanyEarningsResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyEarningsResponseDTO
 
 @UseCase
 class GetCompanyEarningsPerShare(

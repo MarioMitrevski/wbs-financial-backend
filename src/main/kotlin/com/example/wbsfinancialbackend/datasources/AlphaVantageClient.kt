@@ -1,9 +1,9 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints.Companion.ALPHA_VANTAGE
-import com.example.wbsfinancialbackend.datasources.company.CompanyAnnualReportsDTO
-import com.example.wbsfinancialbackend.datasources.company.CompanyEarningsResponseDTO
-import com.example.wbsfinancialbackend.datasources.company.CompanyOverviewResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyAnnualReportsDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyEarningsResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyOverviewResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient

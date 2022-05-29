@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
-import com.example.wbsfinancialbackend.datasources.company.CompaniesBasicInfoDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompaniesBasicInfoDTO
 import com.example.wbsfinancialbackend.datasources.company.stockexchanges.StockExchangesResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate
@@ -25,13 +25,6 @@ interface MarketStackClient {
         @RequestParam limit: Int,
         @RequestParam search: String
     ): StockExchangesResponseDTO
-
-    @RequestMapping(method = [RequestMethod.GET], value = ["/tickers"], produces = ["application/json"])
-    fun getCompanies(
-        @RequestParam offset: Int,
-        @RequestParam limit: Int,
-        @RequestParam search: String
-    ): CompaniesBasicInfoDTO
 }
 
 

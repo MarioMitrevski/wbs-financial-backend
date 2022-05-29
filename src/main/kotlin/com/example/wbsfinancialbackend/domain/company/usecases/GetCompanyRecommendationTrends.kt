@@ -2,7 +2,7 @@ package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.datasources.FinHubClient
 import com.example.wbsfinancialbackend.datasources.UseCase
-import com.example.wbsfinancialbackend.datasources.company.CompanyRecommendationTrendsResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyRecommendationTrendsResponseDTO
 
 
 @UseCase

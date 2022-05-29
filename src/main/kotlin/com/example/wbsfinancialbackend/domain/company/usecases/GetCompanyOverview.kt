@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.datasources.AlphaVantageClient
-import com.example.wbsfinancialbackend.datasources.company.CompanyOverviewResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyOverviewResponseDTO
 import com.example.wbsfinancialbackend.datasources.UseCase
 
 @UseCase

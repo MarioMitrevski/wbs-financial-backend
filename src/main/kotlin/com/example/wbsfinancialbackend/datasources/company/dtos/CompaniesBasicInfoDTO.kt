@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.datasources.company
+package com.example.wbsfinancialbackend.datasources.company.dtos
 
 import com.example.wbsfinancialbackend.api.PaginationResponseDTO
 import com.example.wbsfinancialbackend.datasources.company.stockexchanges.StockExchangeDTO
@@ -9,7 +9,8 @@ data class CompaniesBasicInfoDTO(
 )
 
 data class CompanyBasicInfoDTO(
-    val name: String,
+    val companyName: String,
     val symbol: String,
-    val stock_exchange: StockExchangeDTO
+    val exchange: String,
+    val logoUrl: String,
 )

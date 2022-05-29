@@ -2,7 +2,8 @@ package com.example.wbsfinancialbackend.api.company
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
-import com.example.wbsfinancialbackend.datasources.company.*
+import com.example.wbsfinancialbackend.datasources.CompanyLogoDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
 import com.example.wbsfinancialbackend.domain.company.usecases.*
 import com.example.wbsfinancialbackend.domain.news.usecases.GetCompanyNews
@@ -19,7 +20,8 @@ class CompanyController(
     val getCompanyDetails: GetCompanyDetails,
     val getCompanyRecommendationTrends: GetCompanyRecommendationTrends,
     val getCompanyNews: GetCompanyNews,
-    val getCompanies: GetCompanies
+    val getCompanies: GetCompanies,
+    val getCompanyLogo: GetCompanyLogo
 ) {
 
     @GetMapping(path = ["/{name}/wikiLinks"])
@@ -76,5 +78,12 @@ class CompanyController(
         @RequestParam("query") query: String
     ): ResponseEntity<CompaniesBasicInfoDTO> {
         return ResponseEntity.ok(getCompanies.invoke(pageRequest, query))
+    }
+
+    @GetMapping("/{symbol}/logo")
+    fun getCompanyLogo(
+        @PathVariable symbol: String
+    ): ResponseEntity<CompanyLogoDTO> {
+        return ResponseEntity.ok(getCompanyLogo.invoke(symbol))
     }
 }

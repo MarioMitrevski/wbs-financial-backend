@@ -2,7 +2,7 @@ package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.datasources.AlphaVantageClient
 import com.example.wbsfinancialbackend.datasources.UseCase
-import com.example.wbsfinancialbackend.datasources.company.CompanyAnnualReportsDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyAnnualReportsDTO
 
 @UseCase
 class GetCompanyAnnualReports(
