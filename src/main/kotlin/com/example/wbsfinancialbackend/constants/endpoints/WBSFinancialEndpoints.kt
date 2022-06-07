@@ -8,6 +8,8 @@ class WBSFinancialEndpoints {
         const val MARKET_ENDPOINT = "/market"
 
         const val STOCK_EXCHANGES_ENDPOINT = "$COMPANY_ENDPOINT/exchanges"
+        const val COMPANY_SECTOR_ENDPOINT = "$COMPANY_ENDPOINT/sectors"
+
         const val NEWS_ENDPOINT = "/news"
     }
 }

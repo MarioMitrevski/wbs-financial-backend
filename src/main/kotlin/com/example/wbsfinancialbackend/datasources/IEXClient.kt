@@ -1,10 +1,8 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyBasicInfoDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.MarketTopStocksDTO
-import com.example.wbsfinancialbackend.db.sector.Sector
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
@@ -49,7 +47,7 @@ class IEXClientConfiguration {
     fun iexRequestInterceptor(): RequestInterceptor? {
         return RequestInterceptor { requestTemplate: RequestTemplate ->
             if (requestTemplate.feignTarget().type() == IEXClient::class.java) {
-                requestTemplate.query("token", iexKey)
+                requestTemplate.query("token", "Tpk_2032a4c1c4024467bdc4483ccd932ce0")
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.api.company
+package com.example.wbsfinancialbackend.api.companies
 
 interface CompanyService {
 

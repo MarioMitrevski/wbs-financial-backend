@@ -1,6 +1,6 @@
-package com.example.wbsfinancialbackend.api.company.dbpedia
+package com.example.wbsfinancialbackend.api.companies.dbpedia
 
-import com.example.wbsfinancialbackend.api.company.CompanyService
+import com.example.wbsfinancialbackend.api.companies.CompanyService
 import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI_LINKS_CACHE
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaOntologyUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaResourceUrl

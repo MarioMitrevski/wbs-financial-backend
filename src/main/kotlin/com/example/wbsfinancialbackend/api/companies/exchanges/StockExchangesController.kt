@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.api.company.exchanges
+package com.example.wbsfinancialbackend.api.companies.exchanges
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints

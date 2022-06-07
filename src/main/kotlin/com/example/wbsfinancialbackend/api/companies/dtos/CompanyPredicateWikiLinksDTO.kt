@@ -1,3 +1,3 @@
-package com.example.wbsfinancialbackend.api.company.dtos
+package com.example.wbsfinancialbackend.api.companies.dtos
 
 data class CompanyPredicateWikiLinksDTO(val name: String, val wikiLinks: List<String>)

@@ -1,4 +1,4 @@
-package com.example.wbsfinancialbackend.db.company
+package com.example.wbsfinancialbackend.db
 
 import lombok.EqualsAndHashCode
 import org.hibernate.annotations.GenericGenerator

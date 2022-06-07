@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.db.company
 
-import com.example.wbsfinancialbackend.db.sector.Sector
-import lombok.experimental.SuperBuilder
+import com.example.wbsfinancialbackend.db.BaseEntity
+import com.example.wbsfinancialbackend.db.company.sector.Sector
 import javax.persistence.*
 
 @Entity

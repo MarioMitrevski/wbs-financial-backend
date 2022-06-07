@@ -5,7 +5,7 @@ import com.example.wbsfinancialbackend.datasources.IEXClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.db.company.Company
 import com.example.wbsfinancialbackend.db.company.CompanyRepository
-import com.example.wbsfinancialbackend.db.sector.SectorRepository
+import com.example.wbsfinancialbackend.db.company.sector.SectorRepository
 
 @UseCase
 class SyncCompaniesData(
