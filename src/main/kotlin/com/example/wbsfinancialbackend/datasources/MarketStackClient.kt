@@ -1,7 +1,6 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompaniesBasicInfoDTO
 import com.example.wbsfinancialbackend.datasources.company.stockexchanges.StockExchangesResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate

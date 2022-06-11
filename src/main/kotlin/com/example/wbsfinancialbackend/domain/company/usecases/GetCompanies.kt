@@ -1,19 +1,23 @@
 package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
-import com.example.wbsfinancialbackend.api.PaginationResponseDTO
-import com.example.wbsfinancialbackend.constants.endpoints.DEFAULT_PAGE
-import com.example.wbsfinancialbackend.constants.endpoints.DEFAULT_PAGE_SIZE
-import com.example.wbsfinancialbackend.datasources.IEXClient
-import com.example.wbsfinancialbackend.datasources.MarketStackClient
 import com.example.wbsfinancialbackend.datasources.UseCase
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompaniesBasicInfoDTO
+import com.example.wbsfinancialbackend.db.company.Company
+import com.example.wbsfinancialbackend.db.company.CompanyRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @UseCase
 class GetCompanies(
-    val iexClient: IEXClient
+    val companyRepository: CompanyRepository
 ) {
-    operator fun invoke(pageRequestDTO: PageRequestDTO, query: String): CompaniesBasicInfoDTO {
-        return CompaniesBasicInfoDTO(PaginationResponseDTO(0), listOf())
+    operator fun invoke(pageRequestDTO: PageRequestDTO, sector: String?, query: String?): Page<Company> {
+        return companyRepository
+            .findAllBySectorNameAndQuery(
+                sector,
+                query,
+                Pageable.ofSize(pageRequestDTO.size)
+                    .withPage(pageRequestDTO.page)
+            )
     }
 }

@@ -9,6 +9,6 @@ import lombok.Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PageRequestDTO(
-    val page: Int? = null,
-    val size: Int? = null
+    val page: Int,
+    val size: Int
 )

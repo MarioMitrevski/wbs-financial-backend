@@ -1,6 +1,8 @@
 package com.example.wbsfinancialbackend.api.companies
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
+import com.example.wbsfinancialbackend.api.PaginationResponseDTO
+import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequestDTO
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import com.example.wbsfinancialbackend.datasources.CompanyLogoDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
@@ -72,12 +74,23 @@ class CompanyController(
         return ResponseEntity.ok(getCompanyNews.invoke(symbol))
     }
 
-    @GetMapping
+    @PostMapping
     fun getCompanies(
-        pageRequest: PageRequestDTO,
-        @RequestParam("query") query: String
+        @RequestBody companiesRequestDTO: CompaniesRequestDTO
     ): ResponseEntity<CompaniesBasicInfoDTO> {
-        return ResponseEntity.ok(getCompanies.invoke(pageRequest, query))
+        val companies =
+            getCompanies.invoke(
+                companiesRequestDTO.pageRequest ?: PageRequestDTO(0, 10),
+                companiesRequestDTO.sector,
+                companiesRequestDTO.query
+            )
+        return ResponseEntity.ok(
+            CompaniesBasicInfoDTO(
+                PaginationResponseDTO(companies.number, companies.totalElements, companies.totalPages, companies.hasNext(), companies.hasPrevious()),
+                companies.get().map { CompanyBasicInfoDTO(it.companyName, it.symbol, it.exchange ?: "", it.logoUrl) }
+                    .toList()
+            )
+        )
     }
 
     @GetMapping("/{symbol}/logo")

@@ -3,6 +3,7 @@ package com.example.wbsfinancialbackend.domain.company.categories.usecases
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.db.company.sector.Sector
 import com.example.wbsfinancialbackend.db.company.sector.SectorRepository
+import java.util.*
 
 @UseCase
 class GetCompanySectors(
