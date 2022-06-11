@@ -14,8 +14,8 @@ class GetStockExchanges(
 
     operator fun invoke(pageRequestDTO: PageRequestDTO, query: String): StockExchangesResponseDTO {
         return marketStackClient.getExchanges(
-            pageRequestDTO.page ?: DEFAULT_PAGE,
-            pageRequestDTO.size ?: DEFAULT_PAGE_SIZE,
+            pageRequestDTO.page,
+            pageRequestDTO.size,
             query
         )
     }

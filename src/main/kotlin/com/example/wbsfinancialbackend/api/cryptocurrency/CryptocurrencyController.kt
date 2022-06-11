@@ -31,13 +31,13 @@ class CryptocurrencyController(
         return ResponseEntity.ok(getCryptocurrencyDetails.invoke(id))
     }
 
-    @GetMapping(path = ["/all"])
+    @GetMapping
     fun getCryptocurrencies(
         @RequestParam("page") page: Int,
         @RequestParam("pageSize") pageSize: Int,
         @RequestParam("vsCurrency") vsCurrency: String,
         @RequestParam("priceChangePercentage") priceChangePercentage: List<String>
-    ): ResponseEntity<List<CryptocurrenciesResponseDTO>> {
+    ): ResponseEntity<CryptocurrenciesResponseDTO> {
         return ResponseEntity.ok(getCryptocurrencies.invoke(page, pageSize, vsCurrency, priceChangePercentage))
     }
 }

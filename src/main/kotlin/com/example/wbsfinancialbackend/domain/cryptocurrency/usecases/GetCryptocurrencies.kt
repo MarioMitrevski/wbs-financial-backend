@@ -1,10 +1,13 @@
 package com.example.wbsfinancialbackend.domain.cryptocurrency.usecases
 
+import com.example.wbsfinancialbackend.api.PaginationResponseDTO
+import com.example.wbsfinancialbackend.constants.endpoints.CRYPTOCURRENCIES_TOTAL
 import com.example.wbsfinancialbackend.datasources.CoinGeckoClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrenciesResponseDTO
 import com.example.wbsfinancialbackend.enums.FiatCurrency
 import com.example.wbsfinancialbackend.enums.TimeInterval
+import com.example.wbsfinancialbackend.utils.isWholeNumber
 
 @UseCase
 class GetCryptocurrencies(
@@ -16,7 +19,7 @@ class GetCryptocurrencies(
         pageSize: Int,
         vsCurrency: String,
         priceChangePercentage: List<String>
-    ): List<CryptocurrenciesResponseDTO> {
+    ): CryptocurrenciesResponseDTO {
         if (!FiatCurrency.values().map { it.value }.contains(vsCurrency)) {
             throw IllegalArgumentException("Not supported currency $vsCurrency!")
         }
@@ -25,6 +28,24 @@ class GetCryptocurrencies(
                 throw IllegalArgumentException("Not supported time interval $timeInterval!")
             }
         }
-        return coinGeckoClient.getCryptocurrencies(page, pageSize, vsCurrency, priceChangePercentage.joinToString(","))
+        val data =
+            coinGeckoClient.getCryptocurrencies(page, pageSize, vsCurrency, priceChangePercentage.joinToString(","))
+
+        val totalPagesDecimal = CRYPTOCURRENCIES_TOTAL / pageSize.toDouble()
+        val totalPages = if (isWholeNumber(totalPagesDecimal)) {
+            totalPagesDecimal.toInt()
+        } else {
+            totalPagesDecimal.toInt() + 1
+        }
+        return CryptocurrenciesResponseDTO(
+            pagination = PaginationResponseDTO(
+                page,
+                CRYPTOCURRENCIES_TOTAL,
+                totalPages,
+                totalPages.minus(page) > 0,
+                page > 1
+            ),
+            data = data
+        )
     }
 }

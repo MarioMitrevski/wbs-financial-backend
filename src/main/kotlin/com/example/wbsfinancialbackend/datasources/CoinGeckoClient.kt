@@ -3,6 +3,7 @@ package com.example.wbsfinancialbackend.datasources
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrenciesResponseDTO
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyDetailsResponseDTO
+import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyResponseDTO
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.exchanges.ExchangesResponseDTO
 import com.example.wbsfinancialbackend.enums.TimeInterval
 import org.springframework.cloud.openfeign.FeignClient
@@ -25,7 +26,7 @@ interface CoinGeckoClient {
         @RequestParam("per_page") perPage: Int,
         @RequestParam("vs_currency") vsCurrency: String,
         @RequestParam("price_change_percentage") priceChangePercentage: String
-    ): List<CryptocurrenciesResponseDTO>
+    ): List<CryptocurrencyResponseDTO>
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/exchanges"], produces = ["application/json"])
     fun getExchanges(
