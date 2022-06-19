@@ -54,8 +54,8 @@ class DbInit(
                 Sector("Management of Companies and Enterprises", false),
                 Sector("Government", false)
             )
-        )
-        syncCompaniesData.invoke()*/
+        )*/
+        //syncCompaniesData.invoke()
 
     }
 }

@@ -1,11 +1,9 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
-import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrenciesResponseDTO
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyDetailsResponseDTO
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyResponseDTO
-import com.example.wbsfinancialbackend.datasources.cryptocurrency.exchanges.ExchangesResponseDTO
-import com.example.wbsfinancialbackend.enums.TimeInterval
+import com.example.wbsfinancialbackend.datasources.cryptocurrency.exchanges.ExchangeResponseDTO
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 
@@ -32,5 +30,5 @@ interface CoinGeckoClient {
     fun getExchanges(
         @RequestParam("page") page: Int,
         @RequestParam("per_page") per_page: Int
-    ): List<ExchangesResponseDTO>
+    ): List<ExchangeResponseDTO>
 }

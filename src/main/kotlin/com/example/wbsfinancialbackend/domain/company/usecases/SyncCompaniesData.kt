@@ -1,6 +1,5 @@
 package com.example.wbsfinancialbackend.domain.company.usecases
 
-import com.example.wbsfinancialbackend.datasources.CompanyLogoDTO
 import com.example.wbsfinancialbackend.datasources.IEXClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.db.company.Company
@@ -20,21 +19,34 @@ class SyncCompaniesData(
         sectorRepository.findAll()
             .forEach { sector ->
                 val companiesDTOInSector = iexClient.getCompaniesBySector(sector.name)
-                val companiesWithLogo = if (companiesDTOInSector.isNotEmpty()) {
-                    companiesDTOInSector.subList(0,1).map {
-                        var logo = CompanyLogoDTO("")
+                if (companiesDTOInSector.isNotEmpty()) {
+                    companiesDTOInSector.subList(0, 1).map {
+
                         try {
-                            logo =
-                                iexClient.getCompanyLogo(it.symbol)
+                            val logo = iexClient.getCompanyLogo(it.symbol)
+                            val companyDetails = iexClient.getCompanyDetails(it.symbol)
+                            val newCompany = Company(
+                                companyDetails.companyName,
+                                companyDetails.symbol,
+                                companyDetails.exchange,
+                                logo.url,
+                                companyDetails.description,
+                                companyDetails.country?: "",
+                                companyDetails.ceo?: "",
+                                companyDetails.website?: "",
+                                companyDetails.employees?: 0,
+                                sector
+                            )
+                            companyRepository.findCompanyBySymbol(it.symbol).ifPresent { company ->
+                                newCompany.id = company.id
+                            }
+
+                            companyRepository.save(newCompany)
                         } catch (_: Exception) {
 
                         }
-                        Company(it.companyName, it.symbol, it.primaryExchange, logo.url, sector)
                     }
-                } else {
-                    listOf()
                 }
-                companies.addAll(companiesWithLogo)
             }
         companyRepository.saveAll(companies)
     }

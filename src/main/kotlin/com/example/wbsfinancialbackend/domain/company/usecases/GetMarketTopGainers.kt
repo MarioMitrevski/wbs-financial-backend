@@ -21,7 +21,7 @@ class GetMarketTopGainers(
         return marketTopGainers.map { marketTopStock ->
             val companyLogoProjection =
                 companyLogoProjectionList.find { it.symbol == marketTopStock.symbol }
-            marketTopStock.copy(logo = companyLogoProjection?.logoUrl)
+            marketTopStock.copy(logo = companyLogoProjection?.logo)
         }
     }
 }

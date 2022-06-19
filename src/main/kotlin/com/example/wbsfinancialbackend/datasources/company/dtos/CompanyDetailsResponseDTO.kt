@@ -3,13 +3,14 @@ package com.example.wbsfinancialbackend.datasources.company.dtos
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class CompanyDetailsResponseDTO(
-    @get:JsonProperty("name") val name: String,
-    @get:JsonProperty("logo") val logo: String,
-    @get:JsonProperty("finnhubIndustry") val finnhubIndustry: String,
-    @get:JsonProperty("weburl") val weburl: String,
-    @get:JsonProperty("country") val country: String,
-    @get:JsonProperty("shareOutstanding") val shareOutstanding: String,
-    @get:JsonProperty("exchange") val exchange: String,
-    @get:JsonProperty("ipo") val ipo: String,
-    @get:JsonProperty("marketCapitalization") val marketCapitalization: String,
+    @JsonProperty("companyName") val companyName: String,
+    @JsonProperty("symbol") val symbol: String,
+    @JsonProperty("logo") val logo: String?,
+    @JsonProperty("industry") val industry: String,
+    @JsonProperty("website") val website: String?,
+    @JsonProperty("country") val country: String?,
+    @JsonProperty("exchange") val exchange: String?,
+    @JsonProperty("CEO") val ceo: String?,
+    @JsonProperty("description") val description: String,
+    @JsonProperty("employees") val employees: Int?
 )

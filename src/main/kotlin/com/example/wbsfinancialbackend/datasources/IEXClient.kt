@@ -2,7 +2,9 @@ package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDetailsResponseDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.MarketTopStocksDTO
+import com.example.wbsfinancialbackend.db.company.Company
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
@@ -31,6 +33,11 @@ interface IEXClient {
     fun getCompanyLogo(
         @PathVariable symbol: String
     ): CompanyLogoDTO
+
+    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/{symbol}/company"], produces = ["application/json"])
+    fun getCompanyDetails(
+        @PathVariable symbol: String
+    ): CompanyDetailsResponseDTO
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/stock/market/collection/sector"], produces = ["application/json"])
     fun getCompaniesBySector(

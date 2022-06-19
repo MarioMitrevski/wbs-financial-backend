@@ -87,7 +87,7 @@ class CompanyController(
         return ResponseEntity.ok(
             CompaniesBasicInfoDTO(
                 PaginationResponseDTO(companies.number, companies.totalElements, companies.totalPages, companies.hasNext(), companies.hasPrevious()),
-                companies.get().map { CompanyBasicInfoDTO(it.companyName, it.symbol, it.exchange ?: "", it.logoUrl) }
+                companies.get().map { CompanyBasicInfoDTO(it.companyName, it.symbol, it.exchange ?: "", it.logo) }
                     .toList()
             )
         )

@@ -16,7 +16,7 @@ class ExchangesController(
     fun getExchanges(
         @RequestParam("page") page: Int,
         @RequestParam("pageSize") pageSize: Int
-    ): ResponseEntity<List<ExchangesResponseDTO>> {
+    ): ResponseEntity<ExchangesResponseDTO> {
         return ResponseEntity.ok(getExchanges.invoke(page,pageSize))
     }
 }

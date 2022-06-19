@@ -9,5 +9,5 @@ import javax.persistence.MappedSuperclass
 abstract class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Int = 0
+    var id: Int = 0
 )

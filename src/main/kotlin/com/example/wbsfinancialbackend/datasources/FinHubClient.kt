@@ -19,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam
     configuration = [FinHubClientConfiguration::class]
 )
 interface FinHubClient {
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/profile2"], produces = ["application/json"])
-    fun getCompanyDetails(
-        @RequestParam symbol: String
-    ): CompanyDetailsResponseDTO
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/stock/recommendation"], produces = ["application/json"])
     fun getCompanyRecommendationTrends(
