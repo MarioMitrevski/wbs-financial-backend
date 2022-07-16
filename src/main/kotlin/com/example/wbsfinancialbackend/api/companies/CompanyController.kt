@@ -23,7 +23,8 @@ class CompanyController(
     val getCompanyRecommendationTrends: GetCompanyRecommendationTrends,
     val getCompanyNews: GetCompanyNews,
     val getCompanies: GetCompanies,
-    val getCompanyLogo: GetCompanyLogo
+    val getCompanyLogo: GetCompanyLogo,
+    val getCompanyHistoricalPrices: GetCompanyHistoricalPrices
 ) {
 
     @GetMapping(path = ["/{name}/wikiLinks"])
@@ -98,5 +99,14 @@ class CompanyController(
         @PathVariable symbol: String
     ): ResponseEntity<CompanyLogoDTO> {
         return ResponseEntity.ok(getCompanyLogo.invoke(symbol))
+    }
+
+    @GetMapping("/{symbol}/historicalPrices")
+    fun getCompanyHistoricalPrices(
+        @PathVariable symbol: String,
+        @RequestParam range: String,
+        @RequestParam(defaultValue = "true") chartCloseOnly: Boolean
+    ): ResponseEntity<List<CompanyPriceDTO>> {
+        return ResponseEntity.ok(getCompanyHistoricalPrices.invoke(symbol, range, chartCloseOnly))
     }
 }

@@ -3,8 +3,8 @@ package com.example.wbsfinancialbackend.datasources
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDetailsResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyPriceDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.MarketTopStocksDTO
-import com.example.wbsfinancialbackend.db.company.Company
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
@@ -22,24 +22,55 @@ import org.springframework.web.bind.annotation.RequestParam
 )
 interface IEXClient {
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/market/list/gainers"], produces = ["application/json"])
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/{symbol}/chart/{range}"],
+        produces = ["application/json"]
+    )
+    fun getHistoricalPrices(
+        @PathVariable symbol: String,
+        @PathVariable range: String,
+        @RequestParam chartCloseOnly: Boolean
+    ): List<CompanyPriceDTO>
+
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/market/list/gainers"],
+        produces = ["application/json"]
+    )
     fun getMarketTopGainers(): List<MarketTopStocksDTO>
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/market/list/losers"], produces = ["application/json"])
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/market/list/losers"],
+        produces = ["application/json"]
+    )
     fun getMarketTopLosers(
     ): List<MarketTopStocksDTO>
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/{symbol}/logo"], produces = ["application/json"])
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/{symbol}/logo"],
+        produces = ["application/json"]
+    )
     fun getCompanyLogo(
         @PathVariable symbol: String
     ): CompanyLogoDTO
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/{symbol}/company"], produces = ["application/json"])
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/{symbol}/company"],
+        produces = ["application/json"]
+    )
     fun getCompanyDetails(
         @PathVariable symbol: String
     ): CompanyDetailsResponseDTO
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/stock/market/collection/sector"], produces = ["application/json"])
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["/stock/market/collection/sector"],
+        produces = ["application/json"]
+    )
     fun getCompaniesBySector(
         @RequestParam collectionName: String
     ): List<CompanyDTO>
@@ -54,7 +85,7 @@ class IEXClientConfiguration {
     fun iexRequestInterceptor(): RequestInterceptor? {
         return RequestInterceptor { requestTemplate: RequestTemplate ->
             if (requestTemplate.feignTarget().type() == IEXClient::class.java) {
-                requestTemplate.query("token", "Tpk_2032a4c1c4024467bdc4483ccd932ce0")
+                requestTemplate.query("token", iexKey)
             }
         }
     }

@@ -5,7 +5,7 @@ import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaOntologyUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaResourceUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.WikipediaResourceUrl
-import com.example.wbsfinancialbackend.data.company.dbpedia.Predicate
+import com.example.wbsfinancialbackend.db.Predicate
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.impl.PropertyImpl
 import org.apache.jena.riot.RDFParser
@@ -42,8 +42,8 @@ class CompanyServiceDbpedia : CompanyService {
         val url = DbpediaResourceUrl.plus(companyName)
         val future = CompletableFuture.runAsync {
             LOG.info("$companyName $predicate fetching...")
-            RDFParser.source(url).httpAccept("text/turtle").parse(modelCompany.graph)
-        }.handle { void, throwable ->
+            RDFParser.source(url).acceptHeader("text/turtle").parse(modelCompany.graph)
+        }.handle { _, _ ->
             LOG.info("$companyName $predicate fetching ended")
 
             val supportedPredicate = supportedPredicates.getValue(predicate)

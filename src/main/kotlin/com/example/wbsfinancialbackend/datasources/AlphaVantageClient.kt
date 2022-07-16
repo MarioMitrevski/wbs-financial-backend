@@ -21,12 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam
 interface AlphaVantageClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/query"], produces = ["application/json"])
-    fun getCompanyOverview(
-        @RequestParam symbol: String,
-        @RequestParam function: String = "OVERVIEW"
-    ): CompanyOverviewResponseDTO
-
-    @RequestMapping(method = [RequestMethod.GET], value = ["/query"], produces = ["application/json"])
     fun getCompanyEarningsPerShare(
         @RequestParam symbol: String,
         @RequestParam function: String = "EARNINGS"
