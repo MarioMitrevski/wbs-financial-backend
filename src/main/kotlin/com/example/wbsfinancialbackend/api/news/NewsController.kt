@@ -3,7 +3,6 @@ package com.example.wbsfinancialbackend.api.news
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
 import com.example.wbsfinancialbackend.domain.news.usecases.GetNews
-import com.example.wbsfinancialbackend.enums.NewsCategory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 

@@ -5,7 +5,6 @@ import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.datasources.company.dtos.MarketTopStocksDTO
 import com.example.wbsfinancialbackend.db.company.CompanyRepository
 
-
 @UseCase
 class GetMarketTopGainers(
     val iexClient: IEXClient,

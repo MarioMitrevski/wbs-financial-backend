@@ -5,13 +5,9 @@ import com.example.wbsfinancialbackend.datasources.cryptocurrency.Cryptocurrenci
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyDetailsResponseDTO
 import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptocurrencies
 import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptocurrencyDetails
-import com.example.wbsfinancialbackend.enums.FiatCurrency
-import com.example.wbsfinancialbackend.enums.TimeInterval
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletableFuture
-import kotlin.reflect.full.memberProperties
-
 
 @RestController
 @RequestMapping(path = [WBSFinancialEndpoints.CRYPTOCURRENCY_ENDPOINT])
