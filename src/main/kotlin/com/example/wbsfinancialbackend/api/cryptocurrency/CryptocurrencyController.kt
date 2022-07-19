@@ -7,20 +7,13 @@ import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptoc
 import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptocurrencyDetails
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.concurrent.CompletableFuture
 
 @RestController
 @RequestMapping(path = [WBSFinancialEndpoints.CRYPTOCURRENCY_ENDPOINT])
 class CryptocurrencyController(
-    val cryptocurrencyService: CryptocurrencyService,
     val getCryptocurrencyDetails: GetCryptocurrencyDetails,
     val getCryptocurrencies: GetCryptocurrencies
 ) {
-
-    @GetMapping(path = ["/{name}/description"])
-    fun getCryptocurrencyDescription(@PathVariable("name") name: String): CompletableFuture<String> {
-        return cryptocurrencyService.getCryptocurrencyDescription(name)
-    }
 
     @GetMapping(path = ["/{id}/details"])
     fun getCryptocurrencyDetails(@PathVariable("id") id: String): ResponseEntity<CryptocurrencyDetailsResponseDTO> {
