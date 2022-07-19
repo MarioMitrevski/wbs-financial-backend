@@ -4,7 +4,7 @@ import com.example.wbsfinancialbackend.api.PageRequestDTO
 import com.example.wbsfinancialbackend.api.PaginationResponseDTO
 import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequestDTO
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
-import com.example.wbsfinancialbackend.datasources.CompanyLogoDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyLogoDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
 import com.example.wbsfinancialbackend.domain.company.usecases.*
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(path = [WBSFinancialEndpoints.COMPANY_ENDPOINT])
 class CompanyController(
     val companyService: CompanyService,
-    val getCompanyOverview: GetCompanyOverview,
     val getCompanyEarningsPerShare: GetCompanyEarningsPerShare,
     val getCompanyAnnualReports: GetCompanyAnnualReports,
     val getCompanyDetails: GetCompanyDetails,
@@ -33,11 +32,6 @@ class CompanyController(
         @RequestParam(name = "predicate") predicate: String
     ): List<String> {
         return companyService.getCompanyWikiLinks(name, predicate)
-    }
-
-    @GetMapping(path = ["/{symbol}/overview"])
-    fun getCompanyOverview(@PathVariable("symbol") symbol: String): ResponseEntity<CompanyOverviewResponseDTO> {
-        return ResponseEntity.ok(getCompanyOverview.invoke(symbol))
     }
 
     @GetMapping(path = ["/{symbol}/earnings"])

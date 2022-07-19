@@ -1,6 +1,6 @@
 package com.example.wbsfinancialbackend.domain.company.usecases
 
-import com.example.wbsfinancialbackend.datasources.CompanyLogoDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyLogoDTO
 import com.example.wbsfinancialbackend.datasources.IEXClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 

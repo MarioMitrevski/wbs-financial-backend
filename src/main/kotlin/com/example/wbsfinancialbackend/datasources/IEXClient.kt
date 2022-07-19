@@ -1,10 +1,7 @@
 package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDTO
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDetailsResponseDTO
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyPriceDTO
-import com.example.wbsfinancialbackend.datasources.company.dtos.MarketTopStocksDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
