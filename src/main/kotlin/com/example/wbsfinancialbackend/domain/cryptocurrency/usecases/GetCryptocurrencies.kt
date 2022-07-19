@@ -1,12 +1,14 @@
 package com.example.wbsfinancialbackend.domain.cryptocurrency.usecases
 
 import com.example.wbsfinancialbackend.api.PaginationResponseDTO
+import com.example.wbsfinancialbackend.constants.ErrorMessages
 import com.example.wbsfinancialbackend.constants.endpoints.CRYPTOCURRENCIES_TOTAL
 import com.example.wbsfinancialbackend.datasources.CoinGeckoClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrenciesResponseDTO
 import com.example.wbsfinancialbackend.enums.FiatCurrency
 import com.example.wbsfinancialbackend.enums.TimeInterval
+import com.example.wbsfinancialbackend.exceptions.NotSupportedException
 import com.example.wbsfinancialbackend.utils.isWholeNumber
 
 @UseCase
@@ -21,11 +23,11 @@ class GetCryptocurrencies(
         priceChangePercentage: List<String>
     ): CryptocurrenciesResponseDTO {
         if (!FiatCurrency.values().map { it.value }.contains(vsCurrency)) {
-            throw IllegalArgumentException("Not supported currency $vsCurrency!")
+            throw NotSupportedException(ErrorMessages.entityNotSupportedMessage(vsCurrency))
         }
         priceChangePercentage.forEach { timeInterval ->
             if (!TimeInterval.values().map { it.value }.contains(timeInterval)) {
-                throw IllegalArgumentException("Not supported time interval $timeInterval!")
+                throw NotSupportedException(ErrorMessages.entityNotSupportedMessage(timeInterval))
             }
         }
         val data =
