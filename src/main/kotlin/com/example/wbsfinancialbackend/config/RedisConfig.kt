@@ -41,11 +41,16 @@ class RedisConfig {
                     MARKET_CACHE_VALUE,
                     RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30))
                 )
+                .withCacheConfiguration(
+                    COMPANY_SECTORS_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24))
+                )
         }
     }
 
     companion object {
         const val COMPANY_WIKI_LINKS_CACHE = "companyWikiLinks"
+        const val COMPANY_SECTORS_CACHE_VALUE = "companySectors"
         const val NEWS_CACHE_VALUE = "news"
         const val NEWS_CACHE_KEY = "#category"
         const val MARKET_CACHE_VALUE = "market"
