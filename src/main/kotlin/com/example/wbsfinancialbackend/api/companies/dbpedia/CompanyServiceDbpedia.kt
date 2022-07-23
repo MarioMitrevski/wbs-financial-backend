@@ -1,11 +1,13 @@
 package com.example.wbsfinancialbackend.api.companies.dbpedia
 
 import com.example.wbsfinancialbackend.api.companies.CompanyService
-import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI_LINKS_CACHE
+import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI_LINKS_CACHE_KEY
+import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI_LINKS_CACHE_VALUE
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaOntologyUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaResourceUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.WikipediaResourceUrl
 import com.example.wbsfinancialbackend.db.Predicate
+import com.example.wbsfinancialbackend.exceptions.NotSupportedException
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.impl.PropertyImpl
 import org.apache.jena.riot.RDFParser
@@ -27,7 +29,7 @@ class CompanyServiceDbpedia : CompanyService {
         private val LOG = LoggerFactory.getLogger(CompanyServiceDbpedia::class.java)
     }
 
-    @Cacheable(value = [COMPANY_WIKI_LINKS_CACHE], key = "#companyName + #predicate")
+    @Cacheable(value = [COMPANY_WIKI_LINKS_CACHE_VALUE], key = COMPANY_WIKI_LINKS_CACHE_KEY)
     override fun getCompanyWikiLinks(
         companyName: String,
         predicate: String
@@ -35,7 +37,7 @@ class CompanyServiceDbpedia : CompanyService {
         LOG.info("$companyName $predicate fetching from DBpedia")
 
         if (!supportedPredicates.containsKey(predicate)) {
-            throw IllegalArgumentException("Predicate not supported!")
+            throw NotSupportedException("Predicate $predicate not supported!")
         }
 
         val modelCompany = ModelFactory.createDefaultModel()

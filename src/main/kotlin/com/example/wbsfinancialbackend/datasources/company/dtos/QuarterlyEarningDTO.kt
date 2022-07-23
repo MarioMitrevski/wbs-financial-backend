@@ -1,6 +1,7 @@
 package com.example.wbsfinancialbackend.datasources.company.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 import java.util.*
 
 data class QuarterlyEarningDTO(
@@ -10,4 +11,4 @@ data class QuarterlyEarningDTO(
     @JsonProperty("estimatedEPS") val estimatedEPS: String,
     @JsonProperty("surprise") val surprise: String,
     @JsonProperty("surprisePercentage") val surprisePercentage: String
-)
+): Serializable

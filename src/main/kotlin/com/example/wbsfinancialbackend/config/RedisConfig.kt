@@ -30,8 +30,8 @@ class RedisConfig {
         return RedisCacheManagerBuilderCustomizer { builder: RedisCacheManager.RedisCacheManagerBuilder ->
             builder
                 .withCacheConfiguration(
-                    COMPANY_WIKI_LINKS_CACHE,
-                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(2))
+                    COMPANY_WIKI_LINKS_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(48))
                 )
                 .withCacheConfiguration(
                     NEWS_CACHE_VALUE,
@@ -45,12 +45,18 @@ class RedisConfig {
                     COMPANY_SECTORS_CACHE_VALUE,
                     RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24))
                 )
+                .withCacheConfiguration(
+                    COMPANY_EARNINGS_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24))
+                )
         }
     }
 
     companion object {
-        const val COMPANY_WIKI_LINKS_CACHE = "companyWikiLinks"
+        const val COMPANY_WIKI_LINKS_CACHE_VALUE = "companyWikiLinks"
+        const val COMPANY_WIKI_LINKS_CACHE_KEY = "#companyName + #predicate"
         const val COMPANY_SECTORS_CACHE_VALUE = "companySectors"
+        const val COMPANY_EARNINGS_CACHE_VALUE = "companyEarnings"
         const val NEWS_CACHE_VALUE = "news"
         const val NEWS_CACHE_KEY = "#category"
         const val MARKET_CACHE_VALUE = "market"
