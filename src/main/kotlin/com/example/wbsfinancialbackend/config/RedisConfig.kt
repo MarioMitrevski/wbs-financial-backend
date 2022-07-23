@@ -1,6 +1,7 @@
 package com.example.wbsfinancialbackend.config
 
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer
+import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
@@ -36,6 +37,10 @@ class RedisConfig {
                     NEWS_CACHE_VALUE,
                     RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5))
                 )
+                .withCacheConfiguration(
+                    MARKET_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(30))
+                )
         }
     }
 
@@ -43,6 +48,8 @@ class RedisConfig {
         const val COMPANY_WIKI_LINKS_CACHE = "companyWikiLinks"
         const val NEWS_CACHE_VALUE = "news"
         const val NEWS_CACHE_KEY = "#category"
+        const val MARKET_CACHE_VALUE = "market"
+        const val MARKET_TOP_STOCKS_CACHE_KEY = "#topStocks"
     }
 }
 
