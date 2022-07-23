@@ -49,6 +49,10 @@ class RedisConfig {
                     COMPANY_EARNINGS_CACHE_VALUE,
                     RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24))
                 )
+                .withCacheConfiguration(
+                    COMPANY_ANNUAL_REPORTS_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24))
+                )
         }
     }
 
@@ -57,6 +61,7 @@ class RedisConfig {
         const val COMPANY_WIKI_LINKS_CACHE_KEY = "#companyName + #predicate"
         const val COMPANY_SECTORS_CACHE_VALUE = "companySectors"
         const val COMPANY_EARNINGS_CACHE_VALUE = "companyEarnings"
+        const val COMPANY_ANNUAL_REPORTS_CACHE_VALUE = "companyAnnualReports"
         const val NEWS_CACHE_VALUE = "news"
         const val NEWS_CACHE_KEY = "#category"
         const val MARKET_CACHE_VALUE = "market"

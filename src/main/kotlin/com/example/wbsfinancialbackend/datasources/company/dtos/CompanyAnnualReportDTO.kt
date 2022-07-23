@@ -1,6 +1,7 @@
 package com.example.wbsfinancialbackend.datasources.company.dtos
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 
 data class CompanyAnnualReportDTO(
     @JsonProperty("costOfRevenue") val costOfRevenue: String,
@@ -10,4 +11,4 @@ data class CompanyAnnualReportDTO(
     @JsonProperty("operatingIncome") val operatingIncome: String,
     @JsonProperty("incomeBeforeTax") val incomeBeforeTax: String,
     @JsonProperty("incomeTaxExpense") val incomeTaxExpense: String
-)
+): Serializable
