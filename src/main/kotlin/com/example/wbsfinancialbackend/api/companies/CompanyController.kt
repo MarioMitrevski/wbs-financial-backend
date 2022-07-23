@@ -4,7 +4,6 @@ import com.example.wbsfinancialbackend.api.PageRequestDTO
 import com.example.wbsfinancialbackend.api.PaginationResponseDTO
 import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequestDTO
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyLogoDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
 import com.example.wbsfinancialbackend.domain.company.usecases.*
@@ -22,7 +21,6 @@ class CompanyController(
     val getCompanyRecommendationTrends: GetCompanyRecommendationTrends,
     val getCompanyNews: GetCompanyNews,
     val getCompanies: GetCompanies,
-    val getCompanyLogo: GetCompanyLogo,
     val getCompanyHistoricalPrices: GetCompanyHistoricalPrices
 ) {
 
@@ -81,18 +79,17 @@ class CompanyController(
             )
         return ResponseEntity.ok(
             CompaniesBasicInfoDTO(
-                PaginationResponseDTO(companies.number, companies.totalElements, companies.totalPages, companies.hasNext(), companies.hasPrevious()),
+                PaginationResponseDTO(
+                    companies.number,
+                    companies.totalElements,
+                    companies.totalPages,
+                    companies.hasNext(),
+                    companies.hasPrevious()
+                ),
                 companies.get().map { CompanyBasicInfoDTO(it.companyName, it.symbol, it.exchange ?: "", it.logo) }
                     .toList()
             )
         )
-    }
-
-    @GetMapping("/{symbol}/logo")
-    fun getCompanyLogo(
-        @PathVariable symbol: String
-    ): ResponseEntity<CompanyLogoDTO> {
-        return ResponseEntity.ok(getCompanyLogo.invoke(symbol))
     }
 
     @GetMapping("/{symbol}/historicalPrices")

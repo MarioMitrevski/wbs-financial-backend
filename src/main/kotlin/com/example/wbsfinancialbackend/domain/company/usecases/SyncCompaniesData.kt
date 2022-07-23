@@ -5,14 +5,17 @@ import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.db.company.Company
 import com.example.wbsfinancialbackend.db.company.CompanyRepository
 import com.example.wbsfinancialbackend.db.company.sector.SectorRepository
+import org.springframework.transaction.annotation.Transactional
 
 @UseCase
 class SyncCompaniesData(
     val iexClient: IEXClient,
     val sectorRepository: SectorRepository,
-    val companyRepository: CompanyRepository
+    val companyRepository: CompanyRepository,
+    val getCompanyLogo: GetCompanyLogo
 ) {
 
+    @Transactional
     operator fun invoke() {
         val companies: MutableSet<Company> = mutableSetOf()
 
@@ -23,7 +26,7 @@ class SyncCompaniesData(
                     companiesDTOInSector.subList(0, 1).map {
 
                         try {
-                            val logo = iexClient.getCompanyLogo(it.symbol)
+                            val logo = getCompanyLogo(it.symbol)
                             val companyDetails = iexClient.getCompanyDetails(it.symbol)
                             val newCompany = Company(
                                 companyDetails.companyName,

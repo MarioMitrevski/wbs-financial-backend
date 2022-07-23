@@ -46,7 +46,7 @@ class FinHubClientConfiguration {
     fun finHubRequestInterceptor(): RequestInterceptor? {
         return RequestInterceptor { requestTemplate: RequestTemplate ->
             if (requestTemplate.feignTarget().type() == FinHubClient::class.java) {
-                requestTemplate.query("token", "ca5uunaad3ib7i7rrp40")
+                requestTemplate.query("token", "sandbox_ca5uunaad3ib7i7rrp4g")
             }
         }
     }

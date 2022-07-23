@@ -20,7 +20,8 @@ class RedisConfig {
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(
                     GenericJackson2JsonRedisSerializer()
-                ))
+                )
+            )
     }
 
     @Bean
@@ -29,14 +30,19 @@ class RedisConfig {
             builder
                 .withCacheConfiguration(
                     COMPANY_WIKI_LINKS_CACHE,
-                    RedisCacheConfiguration.defaultCacheConfig()
-                        .entryTtl(Duration.ofHours(2))
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(2))
+                )
+                .withCacheConfiguration(
+                    NEWS_CACHE_VALUE,
+                    RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5))
                 )
         }
     }
 
     companion object {
-        const val COMPANY_WIKI_LINKS_CACHE = "companyWikiLinksCache"
+        const val COMPANY_WIKI_LINKS_CACHE = "companyWikiLinks"
+        const val NEWS_CACHE_VALUE = "news"
+        const val NEWS_CACHE_KEY = "#category"
     }
 }
 
