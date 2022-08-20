@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @FeignClient(
     value = "iexclient",
     url = ClientsEndpoints.IEX,
-    configuration = [IEXClientConfiguration::class]
+    configuration = [IexClientConfiguration::class]
 )
 interface IEXClient {
 
@@ -73,17 +73,19 @@ interface IEXClient {
     ): List<CompanyDTO>
 }
 
-@Configuration
-class IEXClientConfiguration {
+class IexClientInterceptor(private val key: String) : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
+        requestTemplate.query("token", key)
+    }
+}
 
-    val iexKey: String? = System.getenv("iex_key")
+@Configuration
+class IexClientConfiguration(
+    val datasourceProperties: DatasourceProperties
+) {
 
     @Bean
-    fun iexRequestInterceptor(): RequestInterceptor? {
-        return RequestInterceptor { requestTemplate: RequestTemplate ->
-            if (requestTemplate.feignTarget().type() == IEXClient::class.java) {
-                requestTemplate.query("token", iexKey)
-            }
-        }
+    fun iexClientRequestInterceptor(): IexClientInterceptor {
+        return IexClientInterceptor(datasourceProperties.iexKey)
     }
 }

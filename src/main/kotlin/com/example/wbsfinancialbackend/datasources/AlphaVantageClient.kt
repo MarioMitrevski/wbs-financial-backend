@@ -3,7 +3,6 @@ package com.example.wbsfinancialbackend.datasources
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints.Companion.ALPHA_VANTAGE
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyAnnualReportsDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyEarningsResponseDTO
-import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyOverviewResponseDTO
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
@@ -33,17 +32,19 @@ interface AlphaVantageClient {
     ): CompanyAnnualReportsDTO
 }
 
-@Configuration
-class AlphaVantageClientConfiguration {
+class AlphaVantageClientInterceptor(private val key: String) : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
+        requestTemplate.query("apikey", key)
+    }
+}
 
-    val alphaVantageKey: String? = System.getenv("alpha_vantage_key")
+@Configuration
+class AlphaVantageClientConfiguration(
+    val datasourceProperties: DatasourceProperties
+) {
 
     @Bean
-    fun requestInterceptor(): RequestInterceptor? {
-        return RequestInterceptor { requestTemplate: RequestTemplate ->
-            if (requestTemplate.feignTarget().type() == AlphaVantageClient::class.java) {
-                requestTemplate.query("apikey", alphaVantageKey)
-            }
-        }
+    fun alphaVantageRequestInterceptor(): AlphaVantageClientInterceptor {
+        return AlphaVantageClientInterceptor(datasourceProperties.alphavantageKey)
     }
 }

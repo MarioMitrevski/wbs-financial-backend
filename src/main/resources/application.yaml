@@ -16,3 +16,9 @@ spring:
 cron:
   companies:
     expression: 0 0 0 * * *
+
+datasource-keys:
+  iexKey: ${iex_key}
+  marketstackKey: ${marketstack_key}
+  finhubKey: ${finhub_key}
+  alphavantageKey: ${alphavantage_key}

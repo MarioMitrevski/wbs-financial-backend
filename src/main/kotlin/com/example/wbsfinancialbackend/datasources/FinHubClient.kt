@@ -37,17 +37,19 @@ interface FinHubClient {
     ): List<NewsResponseDTO>
 }
 
-@Configuration
-class FinHubClientConfiguration {
+class FinhubClientInterceptor(private val key: String) : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
+        requestTemplate.query("token", key)
+    }
+}
 
-    val finHubKey: String? = System.getenv("finhub_key")
+@Configuration
+class FinHubClientConfiguration(
+    val datasourceProperties: DatasourceProperties
+) {
 
     @Bean
-    fun finHubRequestInterceptor(): RequestInterceptor? {
-        return RequestInterceptor { requestTemplate: RequestTemplate ->
-            if (requestTemplate.feignTarget().type() == FinHubClient::class.java) {
-                requestTemplate.query("token", "sandbox_ca5uunaad3ib7i7rrp4g")
-            }
-        }
+    fun finhubRequestInterceptor(): FinhubClientInterceptor {
+        return FinhubClientInterceptor(datasourceProperties.finhubKey)
     }
 }

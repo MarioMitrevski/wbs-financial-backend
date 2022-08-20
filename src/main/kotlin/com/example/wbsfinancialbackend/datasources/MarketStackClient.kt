@@ -27,17 +27,19 @@ interface MarketStackClient {
 }
 
 
-@Configuration
-class MarketStackClientConfiguration {
+class MarketStackClientInterceptor(private val key: String) : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
+        requestTemplate.query("access_key", key)
+    }
+}
 
-    val marketStackKey: String? = System.getenv("market_stack_key")
+@Configuration
+class MarketStackClientConfiguration(
+    val datasourceProperties: DatasourceProperties
+) {
 
     @Bean
-    fun marketStackRequestInterceptor(): RequestInterceptor? {
-        return RequestInterceptor { requestTemplate: RequestTemplate ->
-            if (requestTemplate.feignTarget().type() == MarketStackClient::class.java) {
-                requestTemplate.query("access_key", marketStackKey)
-            }
-        }
+    fun marketStackRequestInterceptor(): MarketStackClientInterceptor {
+        return MarketStackClientInterceptor(datasourceProperties.marketstackKey)
     }
 }
