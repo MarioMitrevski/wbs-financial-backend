@@ -10,7 +10,7 @@ class Company(
     val companyName: String,
     val symbol: String,
     val exchange: String?,
-    val logo: String,
+    var logo: String,
     @Column(length = 10000) val description: String,
     val country: String,
     val ceo: String,
@@ -18,5 +18,5 @@ class Company(
     val employees: Int,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sector_id", referencedColumnName = "id")
-    val sector: Sector
+    var sector: Sector
 ) : BaseEntity()

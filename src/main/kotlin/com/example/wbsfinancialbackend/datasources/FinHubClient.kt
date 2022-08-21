@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
+    contextId = "finhubContextId",
     value = "finhubclient",
     url = ClientsEndpoints.FIN_HUB,
     configuration = [FinHubClientConfiguration::class]
@@ -43,9 +44,8 @@ class FinhubClientInterceptor(private val key: String) : RequestInterceptor {
     }
 }
 
-@Configuration
 class FinHubClientConfiguration(
-    val datasourceProperties: DatasourceProperties
+    private val datasourceProperties: DatasourceProperties
 ) {
 
     @Bean

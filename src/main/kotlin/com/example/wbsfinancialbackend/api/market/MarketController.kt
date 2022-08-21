@@ -16,7 +16,7 @@ class MarketController(
 ) {
 
     @GetMapping("/{topStocks}")
-    fun getMarketTopStocks(@PathVariable topStocks: TopStocks): ResponseEntity<List<MarketTopStocksDTO>> {
-        return ResponseEntity.ok(getMarketTopStocks.invoke(topStocks))
+    fun getMarketTopStocks(@PathVariable topStocks: String): ResponseEntity<List<MarketTopStocksDTO>> {
+        return ResponseEntity.ok(getMarketTopStocks.invoke(TopStocks.valueOf(topStocks)))
     }
 }

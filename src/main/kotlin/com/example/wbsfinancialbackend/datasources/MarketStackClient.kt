@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
+    contextId = "marketstackContextId",
     value = "marketstacklient",
     url = ClientsEndpoints.MARKET_STACK,
     configuration = [MarketStackClientConfiguration::class]
@@ -33,9 +34,8 @@ class MarketStackClientInterceptor(private val key: String) : RequestInterceptor
     }
 }
 
-@Configuration
 class MarketStackClientConfiguration(
-    val datasourceProperties: DatasourceProperties
+    private val datasourceProperties: DatasourceProperties
 ) {
 
     @Bean

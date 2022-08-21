@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
+    contextId = "alphavantageContextId",
     value = "alphavantageclient",
     url = ALPHA_VANTAGE,
     configuration = [AlphaVantageClientConfiguration::class]
@@ -38,9 +39,8 @@ class AlphaVantageClientInterceptor(private val key: String) : RequestIntercepto
     }
 }
 
-@Configuration
 class AlphaVantageClientConfiguration(
-    val datasourceProperties: DatasourceProperties
+    private val datasourceProperties: DatasourceProperties
 ) {
 
     @Bean

@@ -2,17 +2,19 @@ package com.example.wbsfinancialbackend.datasources
 
 import com.example.wbsfinancialbackend.constants.endpoints.ClientsEndpoints
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
+import com.example.wbsfinancialbackend.db.company.Company
+import feign.Logger
 import feign.RequestInterceptor
 import feign.RequestTemplate
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
+    contextId = "iexContextId",
     value = "iexclient",
     url = ClientsEndpoints.IEX,
     configuration = [IexClientConfiguration::class]
@@ -79,13 +81,17 @@ class IexClientInterceptor(private val key: String) : RequestInterceptor {
     }
 }
 
-@Configuration
 class IexClientConfiguration(
-    val datasourceProperties: DatasourceProperties
+    private val datasourceProperties: DatasourceProperties
 ) {
 
     @Bean
     fun iexClientRequestInterceptor(): IexClientInterceptor {
         return IexClientInterceptor(datasourceProperties.iexKey)
+    }
+
+    @Bean
+    fun feignLoggerLevel(): Logger.Level {
+        return Logger.Level.FULL
     }
 }

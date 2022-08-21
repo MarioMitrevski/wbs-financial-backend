@@ -14,7 +14,7 @@ class DbInit(
 
     @PostConstruct
     private fun postConstruct() {
-        /*sectorRepository.saveAll(
+   /*     sectorRepository.saveAll(
             listOf(
                 Sector("Energy Minerals", true),
                 Sector("Electronic Technology", true),
@@ -55,7 +55,7 @@ class DbInit(
                 Sector("Government", false)
             )
         )*/
-        //syncCompaniesData.invoke()
+       // syncCompaniesData.invoke()
 
     }
 }
