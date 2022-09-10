@@ -2,7 +2,7 @@ package com.example.wbsfinancialbackend.api.companies
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
 import com.example.wbsfinancialbackend.api.PaginationResponseDTO
-import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequestDTO
+import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequest
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
@@ -10,6 +10,7 @@ import com.example.wbsfinancialbackend.domain.company.usecases.*
 import com.example.wbsfinancialbackend.domain.news.usecases.GetCompanyNews
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(path = [WBSFinancialEndpoints.COMPANY_ENDPOINT])
@@ -69,14 +70,9 @@ class CompanyController(
 
     @PostMapping
     fun getCompanies(
-        @RequestBody companiesRequestDTO: CompaniesRequestDTO
+        @Valid @RequestBody pageRequestDTO: PageRequestDTO<CompaniesRequest>
     ): ResponseEntity<CompaniesBasicInfoDTO> {
-        val companies =
-            getCompanies.invoke(
-                companiesRequestDTO.pageRequest ?: PageRequestDTO(0, 10),
-                companiesRequestDTO.sector,
-                companiesRequestDTO.query
-            )
+        val companies = getCompanies.invoke(pageRequestDTO)
         return ResponseEntity.ok(
             CompaniesBasicInfoDTO(
                 PaginationResponseDTO(

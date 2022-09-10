@@ -12,6 +12,6 @@ class GetCompanySectors(
 
     @Cacheable(value = [COMPANY_SECTORS_CACHE_VALUE])
     operator fun invoke(): List<String> {
-        return sectorRepository.findAll().filter { it.active }.map { it.name }.toList()
+        return sectorRepository.findAllByActive().map { it.name }.toList()
     }
 }

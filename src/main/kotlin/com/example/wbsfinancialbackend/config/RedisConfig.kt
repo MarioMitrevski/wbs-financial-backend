@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.config
 
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer
-import org.springframework.cache.interceptor.KeyGenerator
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
@@ -10,6 +10,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import java.time.Duration
 
+@EnableCaching
 @Configuration
 class RedisConfig {
 

@@ -1,14 +1,11 @@
 package com.example.wbsfinancialbackend.api
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonProperty
-import lombok.Builder
-import lombok.Data
+import org.jetbrains.annotations.NotNull
+import javax.validation.Valid
+import javax.validation.constraints.Min
 
-@Data
-@Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
-data class PageRequestDTO(
-    val page: Int,
-    val size: Int
+data class PageRequestDTO<T>(
+    @field:NotNull @field:Min(0) val page: Int,
+    @field:NotNull @field:Min(1) val size: Int,
+    @field:Valid val filterBy: T
 )

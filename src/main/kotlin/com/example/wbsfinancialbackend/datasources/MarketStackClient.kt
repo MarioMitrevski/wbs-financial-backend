@@ -23,7 +23,7 @@ interface MarketStackClient {
     fun getExchanges(
         @RequestParam offset: Int,
         @RequestParam limit: Int,
-        @RequestParam search: String
+        @RequestParam search: String?
     ): StockExchangesResponseDTO
 }
 

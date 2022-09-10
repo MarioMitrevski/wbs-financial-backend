@@ -1,6 +1,7 @@
 package com.example.wbsfinancialbackend.domain.company.usecases
 
 import com.example.wbsfinancialbackend.api.PageRequestDTO
+import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequest
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.db.company.Company
 import com.example.wbsfinancialbackend.db.company.CompanyRepository
@@ -11,11 +12,11 @@ import org.springframework.data.domain.Pageable
 class GetCompanies(
     val companyRepository: CompanyRepository
 ) {
-    operator fun invoke(pageRequestDTO: PageRequestDTO, sector: String?, query: String?): Page<Company> {
+    operator fun invoke(pageRequestDTO: PageRequestDTO<CompaniesRequest>): Page<Company> {
         return companyRepository
             .findAllBySectorNameAndQuery(
-                sector,
-                query,
+                pageRequestDTO.filterBy.sector,
+                pageRequestDTO.filterBy.query,
                 Pageable.ofSize(pageRequestDTO.size)
                     .withPage(pageRequestDTO.page)
             )

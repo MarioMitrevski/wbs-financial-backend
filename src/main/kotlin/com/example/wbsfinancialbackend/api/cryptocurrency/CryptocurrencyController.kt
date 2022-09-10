@@ -1,5 +1,7 @@
 package com.example.wbsfinancialbackend.api.cryptocurrency
 
+import com.example.wbsfinancialbackend.api.PageRequestDTO
+import com.example.wbsfinancialbackend.api.cryptocurrency.dtos.CryptocurrenciesRequest
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrenciesResponseDTO
 import com.example.wbsfinancialbackend.datasources.cryptocurrency.CryptocurrencyDetailsResponseDTO
@@ -7,6 +9,7 @@ import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptoc
 import com.example.wbsfinancialbackend.domain.cryptocurrency.usecases.GetCryptocurrencyDetails
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping(path = [WBSFinancialEndpoints.CRYPTOCURRENCY_ENDPOINT])
@@ -20,13 +23,10 @@ class CryptocurrencyController(
         return ResponseEntity.ok(getCryptocurrencyDetails.invoke(id))
     }
 
-    @GetMapping
+    @PostMapping
     fun getCryptocurrencies(
-        @RequestParam("page") page: Int,
-        @RequestParam("pageSize") pageSize: Int,
-        @RequestParam("vsCurrency") vsCurrency: String,
-        @RequestParam("priceChangePercentage") priceChangePercentage: List<String>
+        @Valid @RequestBody pageRequestDTO: PageRequestDTO<CryptocurrenciesRequest>
     ): ResponseEntity<CryptocurrenciesResponseDTO> {
-        return ResponseEntity.ok(getCryptocurrencies.invoke(page, pageSize, vsCurrency, priceChangePercentage))
+        return ResponseEntity.ok(getCryptocurrencies.invoke(pageRequestDTO))
     }
 }

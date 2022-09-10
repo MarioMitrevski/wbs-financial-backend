@@ -16,7 +16,6 @@ import java.util.stream.Collectors
 
 @SpringBootApplication
 @EnableAsync
-@EnableCaching
 @EnableFeignClients
 @ConfigurationPropertiesScan
 class WbsFinancialBackendApplication
