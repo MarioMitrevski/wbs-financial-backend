@@ -22,7 +22,7 @@ class GetMarketTopStocks(
                 iexClient.getMarketTopGainers()
             }
             TopStocks.TOP_LOSERS -> {
-                iexClient.getMarketTopGainers()
+                iexClient.getMarketTopLosers()
             }
         }
 
