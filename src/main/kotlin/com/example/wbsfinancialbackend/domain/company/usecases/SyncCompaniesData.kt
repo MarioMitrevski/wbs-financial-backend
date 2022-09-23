@@ -25,18 +25,14 @@ class SyncCompaniesData(
         runBlocking {
             launch {
                 withContext(Dispatchers.IO) {
-                    sectorRepository.findAll()
-                }.filter { it.active }
+                    sectorRepository.findAllByActive()
+                }
                     .forEach { sector ->
                         val companiesDTOInSector: List<CompanyDTO>
                         var elapsed = measureNanoTime {
                             companiesDTOInSector = iexClient.getCompaniesBySector(sector.name)
                         }
-                        var remainingMillisecondsTillNextCall =
-                            getRemainingMillisecondsTillNextCall(elapsed)
-                        if (remainingMillisecondsTillNextCall > 0) {
-                            delay(remainingMillisecondsTillNextCall)
-                        }
+                        delayUntilNextCall(elapsed)
                         if (companiesDTOInSector.isNotEmpty()) {
                             companiesDTOInSector.subList(0, 1).map {
 
@@ -47,19 +43,11 @@ class SyncCompaniesData(
                                     elapsed = measureNanoTime {
                                         logo = getCompanyLogo(it.symbol).url
                                     }
-                                    remainingMillisecondsTillNextCall =
-                                        getRemainingMillisecondsTillNextCall(elapsed)
-                                    if (remainingMillisecondsTillNextCall > 0) {
-                                        delay(remainingMillisecondsTillNextCall)
-                                    }
+                                    delayUntilNextCall(elapsed)
                                     elapsed = measureNanoTime {
                                         companyDetailsResponseDTO = iexClient.getCompanyDetails(it.symbol)
                                     }
-                                    remainingMillisecondsTillNextCall =
-                                        getRemainingMillisecondsTillNextCall(elapsed)
-                                    if (remainingMillisecondsTillNextCall > 0) {
-                                        delay(remainingMillisecondsTillNextCall)
-                                    }
+                                    delayUntilNextCall(elapsed)
                                     company = Company(
                                         companyDetailsResponseDTO.companyName,
                                         companyDetailsResponseDTO.symbol,
@@ -80,7 +68,7 @@ class SyncCompaniesData(
                                     }
                                     companies.add(company)
                                 } catch (_: Exception) {
-
+                                    throw Exception("Sync companies data failed!")
                                 }
                             }
                         }
@@ -88,6 +76,14 @@ class SyncCompaniesData(
             }
         }
         companyRepository.saveAll(companies)
+    }
+
+    private suspend fun delayUntilNextCall(elapsed: Long) {
+        val remainingMillisecondsTillNextCall =
+            getRemainingMillisecondsTillNextCall(elapsed)
+        if (remainingMillisecondsTillNextCall > 0) {
+            delay(remainingMillisecondsTillNextCall)
+        }
     }
 
     fun getRemainingMillisecondsTillNextCall(elapsed: Long): Long {
