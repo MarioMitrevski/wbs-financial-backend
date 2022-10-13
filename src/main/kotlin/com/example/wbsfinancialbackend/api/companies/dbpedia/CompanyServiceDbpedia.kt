@@ -6,7 +6,6 @@ import com.example.wbsfinancialbackend.config.RedisConfig.Companion.COMPANY_WIKI
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaOntologyUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.DbpediaResourceUrl
 import com.example.wbsfinancialbackend.constants.endpoints.SparqlEndpoints.Companion.WikipediaResourceUrl
-import com.example.wbsfinancialbackend.db.Predicate
 import com.example.wbsfinancialbackend.exceptions.NotSupportedException
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.impl.PropertyImpl

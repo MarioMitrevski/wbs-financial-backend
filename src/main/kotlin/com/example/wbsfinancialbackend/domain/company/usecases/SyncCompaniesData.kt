@@ -4,6 +4,7 @@ import com.example.wbsfinancialbackend.datasources.IEXClient
 import com.example.wbsfinancialbackend.datasources.UseCase
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDTO
 import com.example.wbsfinancialbackend.datasources.company.dtos.CompanyDetailsResponseDTO
+import com.example.wbsfinancialbackend.datasources.company.dtos.mapToCompany
 import com.example.wbsfinancialbackend.db.company.Company
 import com.example.wbsfinancialbackend.db.company.CompanyRepository
 import com.example.wbsfinancialbackend.db.company.sector.SectorRepository
@@ -39,7 +40,7 @@ class SyncCompaniesData(
                                 try {
                                     val logo: String
                                     val company: Company
-                                    val companyDetailsResponseDTO: CompanyDetailsResponseDTO
+                                    var companyDetailsResponseDTO: CompanyDetailsResponseDTO
                                     elapsed = measureNanoTime {
                                         logo = getCompanyLogo(it.symbol).url
                                     }
@@ -48,19 +49,8 @@ class SyncCompaniesData(
                                         companyDetailsResponseDTO = iexClient.getCompanyDetails(it.symbol)
                                     }
                                     delayUntilNextCall(elapsed)
-                                    company = Company(
-                                        companyDetailsResponseDTO.companyName,
-                                        companyDetailsResponseDTO.symbol,
-                                        companyDetailsResponseDTO.exchange,
-                                        logo,
-                                        companyDetailsResponseDTO.description,
-                                        companyDetailsResponseDTO.country?: "",
-                                        companyDetailsResponseDTO.ceo?: "",
-                                        companyDetailsResponseDTO.website?: "",
-                                        companyDetailsResponseDTO.employees?: 0,
-                                        sector
-                                    )
-
+                                    companyDetailsResponseDTO = companyDetailsResponseDTO.copy(logo = logo)
+                                    company = companyDetailsResponseDTO.mapToCompany(sector);
                                     withContext(Dispatchers.IO) {
                                         companyRepository.findCompanyBySymbol(it.symbol)
                                     }.ifPresent { existingCompany ->

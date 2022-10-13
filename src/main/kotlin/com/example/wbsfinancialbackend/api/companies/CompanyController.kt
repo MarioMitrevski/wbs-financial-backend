@@ -6,6 +6,7 @@ import com.example.wbsfinancialbackend.api.companies.dtos.CompaniesRequest
 import com.example.wbsfinancialbackend.constants.endpoints.WBSFinancialEndpoints
 import com.example.wbsfinancialbackend.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.datasources.news.NewsResponseDTO
+import com.example.wbsfinancialbackend.db.company.financialdata.CompanyFinancialData
 import com.example.wbsfinancialbackend.domain.company.usecases.*
 import com.example.wbsfinancialbackend.domain.news.usecases.GetCompanyNews
 import org.springframework.http.ResponseEntity
@@ -40,11 +41,11 @@ class CompanyController(
         return ResponseEntity.ok(getCompanyEarningsPerShare.invoke(symbol))
     }
 
-    @GetMapping(path = ["/{symbol}/annualReports"])
+    @GetMapping(path = ["/{id}/annualReports"])
     fun getCompanyReportsAnnual(
-        @PathVariable("symbol") symbol: String,
-    ): ResponseEntity<CompanyAnnualReportsDTO> {
-        return ResponseEntity.ok(getCompanyAnnualReports.invoke(symbol))
+        @PathVariable("id") id: Int,
+    ): ResponseEntity<List<CompanyFinancialData>> {
+        return ResponseEntity.ok(getCompanyAnnualReports.invoke(id))
     }
 
     @GetMapping(path = ["/{symbol}/details"])
@@ -82,8 +83,7 @@ class CompanyController(
                     companies.hasNext(),
                     companies.hasPrevious()
                 ),
-                companies.get().map { CompanyBasicInfoDTO(it.companyName, it.symbol, it.exchange ?: "", it.logo) }
-                    .toList()
+                companies.get().map { it.mapToCompanyBasicInfoDTO() }.toList()
             )
         )
     }
