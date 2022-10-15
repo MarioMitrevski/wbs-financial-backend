@@ -1,11 +1,11 @@
 package com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos
 
-import com.example.wbsfinancialbackend.infrastructure.db.company.Company
-import com.example.wbsfinancialbackend.infrastructure.db.company.sector.Sector
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 
 data class CompanyDetailsResponseDTO(
+    @JsonProperty("id") val id: Int,
     @JsonProperty("companyName") val companyName: String,
     @JsonProperty("symbol") val symbol: String,
     @JsonProperty("logo") val logo: String?,
@@ -18,8 +18,9 @@ data class CompanyDetailsResponseDTO(
     @JsonProperty("employees") val employees: Int?
 ): Serializable
 
-fun CompanyDetailsResponseDTO.mapToCompany(sector: Sector): Company {
-    return Company(
+fun CompanyDetailsResponseDTO.mapToCompanyModel(): CompanyModel {
+    return CompanyModel(
+        this.id,
         this.companyName,
         this.symbol,
         this.exchange,
@@ -29,21 +30,6 @@ fun CompanyDetailsResponseDTO.mapToCompany(sector: Sector): Company {
         this.ceo?: "",
         this.website?: "",
         this.employees?: 0,
-        sector
-    )
-}
-
-fun Company.mapToCompanyDetailsResponseDTO(): CompanyDetailsResponseDTO {
-    return CompanyDetailsResponseDTO(
-        this.companyName,
-        this.symbol,
-        this.logo,
-        this.sector.name,
-        this.website,
-        this.country,
-        this.exchange ?: "",
-        this.ceo,
-        this.description,
-        this.employees
+        null
     )
 }

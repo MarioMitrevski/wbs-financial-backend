@@ -1,5 +1,7 @@
 package com.example.wbsfinancialbackend.infrastructure.api.companies
 
+import com.example.wbsfinancialbackend.core.company.CompanyFinancialDataModel
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 import com.example.wbsfinancialbackend.infrastructure.api.PageRequestDTO
 import com.example.wbsfinancialbackend.infrastructure.api.PaginationResponseDTO
 import com.example.wbsfinancialbackend.infrastructure.api.companies.dtos.CompaniesRequest
@@ -8,7 +10,6 @@ import com.example.wbsfinancialbackend.core.company.usecases.*
 import com.example.wbsfinancialbackend.core.news.usecases.GetCompanyNews
 import com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos.*
 import com.example.wbsfinancialbackend.infrastructure.datasources.news.NewsResponseDTO
-import com.example.wbsfinancialbackend.infrastructure.db.company.financialdata.CompanyFinancialData
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -44,14 +45,14 @@ class CompanyController(
     @GetMapping(path = ["/{id}/annualReports"])
     fun getCompanyReportsAnnual(
         @PathVariable("id") id: Int,
-    ): ResponseEntity<List<CompanyFinancialData>> {
+    ): ResponseEntity<CompanyFinancialDataModel> {
         return ResponseEntity.ok(getCompanyAnnualReports.invoke(id))
     }
 
     @GetMapping(path = ["/{symbol}/details"])
     fun getCompanyDetails(
         @PathVariable("symbol") symbol: String,
-    ): ResponseEntity<CompanyDetailsResponseDTO> {
+    ): ResponseEntity<CompanyModel> {
         return ResponseEntity.ok(getCompanyDetails.invoke(symbol))
     }
 

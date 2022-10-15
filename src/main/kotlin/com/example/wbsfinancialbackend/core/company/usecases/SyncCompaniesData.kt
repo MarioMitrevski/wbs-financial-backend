@@ -1,11 +1,10 @@
 package com.example.wbsfinancialbackend.core.company.usecases
 
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 import com.example.wbsfinancialbackend.core.company.gateways.SyncCompaniesDataGateway
 import com.example.wbsfinancialbackend.infrastructure.datasources.UseCase
 import com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos.CompanyDTO
-import com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos.CompanyDetailsResponseDTO
-import com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos.mapToCompany
-import com.example.wbsfinancialbackend.infrastructure.db.company.Company
+import com.example.wbsfinancialbackend.infrastructure.exceptions.NotFoundException
 import kotlinx.coroutines.*
 import org.springframework.transaction.annotation.Transactional
 import kotlin.system.measureNanoTime
@@ -19,7 +18,7 @@ class SyncCompaniesData(
 
     @Transactional
     operator fun invoke() {
-        val companies: MutableSet<Company> = mutableSetOf()
+        val companies: MutableSet<CompanyModel> = mutableSetOf()
         runBlocking {
             launch {
                 withContext(Dispatchers.IO) {
@@ -36,22 +35,22 @@ class SyncCompaniesData(
 
                                 try {
                                     val logo: String
-                                    val company: Company
-                                    var companyDetailsResponseDTO: CompanyDetailsResponseDTO
+                                    var company: CompanyModel
                                     elapsed = measureNanoTime {
                                         logo = getCompanyLogo(it.symbol).url
                                     }
                                     delayUntilNextCall(elapsed)
                                     elapsed = measureNanoTime {
-                                        companyDetailsResponseDTO = getCompanyDetails(it.symbol)
+                                        company = syncCompaniesDataGateway.getCompanyDetails(it.symbol)
                                     }
                                     delayUntilNextCall(elapsed)
-                                    companyDetailsResponseDTO = companyDetailsResponseDTO.copy(logo = logo)
-                                    company = companyDetailsResponseDTO.mapToCompany(sector)
+                                    company = company.copy(logo = logo, sectorModel = sector)
                                     withContext(Dispatchers.IO) {
-                                        syncCompaniesDataGateway.findCompanyBySymbol(it.symbol)?.apply {
-                                            company.id = this.id
-                                        }
+                                        try {
+                                            getCompanyDetails.invoke(it.symbol).run {
+                                                company.id = this.id
+                                            }
+                                        } catch (_: NotFoundException){}
                                     }
                                     companies.add(company)
                                 } catch (_: Exception) {

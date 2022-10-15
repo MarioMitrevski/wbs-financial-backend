@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.core.company.gateways
 
-import com.example.wbsfinancialbackend.infrastructure.db.company.Company
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 
 interface GetCompanyDetailsGateway {
-    fun findCompanyBySymbol(symbol: String): Company
+    fun findCompanyBySymbol(symbol: String): CompanyModel
 }

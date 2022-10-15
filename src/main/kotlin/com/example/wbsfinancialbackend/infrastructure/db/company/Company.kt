@@ -1,7 +1,10 @@
 package com.example.wbsfinancialbackend.infrastructure.db.company
 
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 import com.example.wbsfinancialbackend.infrastructure.db.BaseEntity
 import com.example.wbsfinancialbackend.infrastructure.db.company.sector.Sector
+import com.example.wbsfinancialbackend.infrastructure.db.company.sector.mapToSector
+import com.example.wbsfinancialbackend.infrastructure.db.company.sector.mapToSectorModel
 import javax.persistence.*
 
 @Entity
@@ -18,5 +21,38 @@ class Company(
     val employees: Int,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sector_id", referencedColumnName = "id")
-    var sector: Sector
+    var sector: Sector?
 ) : BaseEntity()
+
+
+fun Company.mapToCompanyModel(): CompanyModel {
+    return CompanyModel(
+        this.id,
+        this.companyName,
+        this.symbol,
+        this.exchange,
+        this.logo,
+        this.description,
+        this.country,
+        this.ceo,
+        this.website,
+        this.employees,
+        this.sector?.mapToSectorModel()
+    )
+}
+
+fun CompanyModel.mapToCompany(): Company {
+    val id = this.id
+    return Company(
+        this.companyName,
+        this.symbol,
+        this.exchange,
+        this.logo,
+        this.description,
+        this.country,
+        this.ceo,
+        this.website,
+        this.employees,
+        this.sectorModel?.mapToSector()
+    ).apply { this.id = id }
+}

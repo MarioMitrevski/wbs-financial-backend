@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.core.company.categories.gateways
 
-import com.example.wbsfinancialbackend.infrastructure.db.company.sector.Sector
+import com.example.wbsfinancialbackend.core.company.categories.SectorModel
 
 interface GetCompanySectorsGateway {
-    fun findAllByActive(): List<Sector>
+    fun findAllByActive(): List<SectorModel>
 }

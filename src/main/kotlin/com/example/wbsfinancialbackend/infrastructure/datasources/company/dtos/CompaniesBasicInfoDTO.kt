@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.infrastructure.datasources.company.dtos
 
+import com.example.wbsfinancialbackend.core.company.CompanyModel
 import com.example.wbsfinancialbackend.infrastructure.api.PaginationResponseDTO
-import com.example.wbsfinancialbackend.infrastructure.db.company.Company
 
 data class CompaniesBasicInfoDTO(
     val pagination: PaginationResponseDTO,
@@ -15,7 +15,7 @@ data class CompanyBasicInfoDTO(
     val logoUrl: String,
 )
 
-fun Company.mapToCompanyBasicInfoDTO(): CompanyBasicInfoDTO {
+fun CompanyModel.mapToCompanyBasicInfoDTO(): CompanyBasicInfoDTO {
     return CompanyBasicInfoDTO(
         this.companyName,
         this.symbol,

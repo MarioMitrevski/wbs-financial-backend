@@ -1,7 +1,7 @@
 package com.example.wbsfinancialbackend.core.company.gateways
 
-import com.example.wbsfinancialbackend.infrastructure.db.company.financialdata.CompanyFinancialData
+import com.example.wbsfinancialbackend.core.company.CompanyFinancialDataModel
 
 interface GetCompanyAnnualReportsGateway {
-    fun findAllByCompanyId(id: Int): List<CompanyFinancialData>
+    fun findAllByCompanyId(id: Int): CompanyFinancialDataModel
 }
