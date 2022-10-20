@@ -30,6 +30,7 @@ fun CompanyDetailsResponseDTO.mapToCompanyModel(): CompanyModel {
         this.ceo?: "",
         this.website?: "",
         this.employees?: 0,
+        this.industry,
         null
     )
 }

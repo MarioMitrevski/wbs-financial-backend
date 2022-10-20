@@ -32,7 +32,7 @@ class GetMarketTopStocks(
         return marketTopStocks.map { marketTopStock ->
             val companyLogoProjection =
                 companyLogoProjectionList.find { it.symbol == marketTopStock.symbol }
-            marketTopStock.copy(logo = companyLogoProjection?.logo)
+            marketTopStock.copy(logo = "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg")
         }
     }
 }

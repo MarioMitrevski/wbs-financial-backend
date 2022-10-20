@@ -22,7 +22,8 @@ class GetCompanyWikiLinksGatewayDbpedia : GetCompanyWikiLinksGateway {
         }
 
         val modelCompany = ModelFactory.createDefaultModel()
-        val url = SparqlEndpoints.DbpediaResourceUrl.plus(companyName)
+        val formattedCompanyName = formatCompanyName(companyName)
+        val url = SparqlEndpoints.DbpediaResourceUrl.plus(formattedCompanyName)
         val future = CompletableFuture.runAsync {
             LOG.info("$companyName $predicate fetching...")
             RDFParser.source(url).acceptHeader("text/turtle").parse(modelCompany.graph)
@@ -45,6 +46,9 @@ class GetCompanyWikiLinksGatewayDbpedia : GetCompanyWikiLinksGateway {
 
     private fun mapDbpediaResourceToWikiPage(dbpediaResource: String): String =
         SparqlEndpoints.WikipediaResourceUrl.plus(dbpediaResource.split("/").last())
+
+    private fun formatCompanyName(companyName: String): String =
+        if (companyName.last() == '.') companyName.dropLast(1) else companyName
 
     companion object {
         private val supportedPredicates = mapOf(

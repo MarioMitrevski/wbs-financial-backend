@@ -1,5 +1,6 @@
 package com.example.wbsfinancialbackend.infrastructure.datasources.cryptocurrency
 
+import java.io.Serializable
 import java.math.BigDecimal
 import java.util.*
 
@@ -56,16 +57,16 @@ data class CryptocurrencyMarketDataDTO(
     val low_24h: FiatsDTO,
     val price_change_24h_in_currency: FiatsDTO,
     val price_change_percentage_24h_in_currency: FiatsDTO
-)
+): Serializable
 
 data class FiatsDTO(
     val eur: BigDecimal?,
     val gbp: BigDecimal?,
     val usd: BigDecimal?
-)
+): Serializable
 
 data class FiatDateDTO(
     val eur: Date?,
     val gbp: Date?,
     val usd: Date?
-)
+): Serializable

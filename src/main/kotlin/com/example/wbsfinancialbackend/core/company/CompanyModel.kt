@@ -14,5 +14,6 @@ data class CompanyModel(
     val ceo: String,
     val website: String,
     val employees: Int,
+    val industry: String?,
     val sectorModel: SectorModel?
 ): Serializable

@@ -19,6 +19,7 @@ class Company(
     val ceo: String,
     val website: String,
     val employees: Int,
+    val industry: String,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sector_id", referencedColumnName = "id")
     var sector: Sector?
@@ -37,6 +38,7 @@ fun Company.mapToCompanyModel(): CompanyModel {
         this.ceo,
         this.website,
         this.employees,
+        this.industry,
         this.sector?.mapToSectorModel()
     )
 }
@@ -53,6 +55,7 @@ fun CompanyModel.mapToCompany(): Company {
         this.ceo,
         this.website,
         this.employees,
+        this.industry?: "",
         this.sectorModel?.mapToSector()
     ).apply { this.id = id }
 }
